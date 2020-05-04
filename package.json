@@ -1,0 +1,11 @@
+{
+    "name": "@karma/common",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Renat Gubaev",
+    "license": "ISC",
+    "dependencies": {
+        "@ts-core/common": "^1.0.77"
+    },
+    "devDependencies": {}
+}
