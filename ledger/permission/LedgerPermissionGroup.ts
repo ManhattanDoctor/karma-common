@@ -20,7 +20,7 @@ export class LedgerPermissionGroup implements IUIDable {
     //
     // --------------------------------------------------------------------------
 
-    public static createUid():string {
+    public static createUid(): string {
         return `${LedgerPermissionGroup.PREFIX}:${uuid()}`;
     }
 
@@ -39,7 +39,7 @@ export class LedgerPermissionGroup implements IUIDable {
     @Matches(RegExpUtil.DESCRIPTION)
     description: string;
 
-    // @IsEnum(LedgerPermissionKey, { each: true })
+    @IsString({ each: true })
     @ArrayUnique()
     permissions: Array<LedgerPermissionKey>;
 }

@@ -2,17 +2,19 @@ import { TransportCommandFabricAsync } from '@ts-core/blockchain-fabric/transpor
 import { ITraceable } from '@ts-core/common/trace';
 import { TransformUtil } from '@ts-core/common/util';
 import { LedgerUser } from '../../../ledger/user';
-import { IsOptional, Matches, IsArray } from 'class-validator';
+import { IsDefined, ValidateNested, IsArray } from 'class-validator';
 import { KarmaLedgerCommand } from '../KarmaLedgerCommand';
+import { LedgerCryptoKey } from '../../../ledger/key';
+import { LedgerPermissionGroup } from '../../../ledger/permission';
 
-export class UserGetCommand extends TransportCommandFabricAsync<IUserGetDto, LedgerUser> {
+export class UserAddCommand extends TransportCommandFabricAsync<IUserAddDto, LedgerUser> {
     // --------------------------------------------------------------------------
     //
-    //  Static Properties
+    //  Public Static Properties
     //
     // --------------------------------------------------------------------------
 
-    public static readonly NAME = KarmaLedgerCommand.USER_GET;
+    public static readonly NAME = KarmaLedgerCommand.USER_ADD;
 
     // --------------------------------------------------------------------------
     //
@@ -20,8 +22,8 @@ export class UserGetCommand extends TransportCommandFabricAsync<IUserGetDto, Led
     //
     // --------------------------------------------------------------------------
 
-    constructor(request: IUserGetDto) {
-        super(UserGetCommand.NAME, TransformUtil.toClass(UserGetDto, request), null, true);
+    constructor(request: IUserAddDto) {
+        super(UserAddCommand.NAME, TransformUtil.toClass(UserAddDto, request));
     }
 
     // --------------------------------------------------------------------------
@@ -35,16 +37,16 @@ export class UserGetCommand extends TransportCommandFabricAsync<IUserGetDto, Led
     }
 }
 
-export interface IUserGetDto extends ITraceable {
-    uid: string;
-    details?: Array<keyof LedgerUser>;
+export interface IUserAddDto extends ITraceable {
+    cryptoKey: Partial<LedgerCryptoKey>;
+    permissions: Array<LedgerPermissionGroup>;
 }
 
-export class UserGetDto implements IUserGetDto {
-    @Matches(LedgerUser.UID_REGXP)
-    uid: string;
+export class UserAddDto implements IUserAddDto {
+    @IsDefined()
+    cryptoKey: Partial<LedgerCryptoKey>;
 
     @IsArray()
-    @IsOptional()
-    details?: Array<keyof LedgerUser>;
+    @ValidateNested()
+    permissions: Array<LedgerPermissionGroup>;
 }

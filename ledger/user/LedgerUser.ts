@@ -1,11 +1,12 @@
 import { IsEnum, IsDate, Length, Matches, IsOptional, IsString } from 'class-validator';
 import { Exclude, Type } from 'class-transformer';
-import { LedgerPermissionGroup } from '../permission';
+import { LedgerPermissionGroup, LedgerPermissionKey } from '../permission';
 import { LedgerCryptoKey } from '../key/LedgerCryptoKey';
 import { RegExpUtil } from '../../util';
 import { IUIDable } from '../../IUIDable';
 import * as uuid from 'uuid';
 import * as _ from 'lodash';
+import { LedgerError, LedgerErrorCode } from '../error';
 
 export enum LedgerUserStatus {
     ACTIVE = 'ACTIVE',
@@ -36,7 +37,7 @@ export class LedgerUser implements IUIDable {
         item.createdDate = createdDate;
         return item;
     }
-    
+
     public static createUid(createdDate: Date): string {
         let time = LedgerUser.MAX_CREATED_DATE.getTime() - createdDate.getTime();
         return `${LedgerUser.PREFIX}:${_.padStart(time.toString(), 14, '0')}:${uuid()}`;
@@ -63,4 +64,17 @@ export class LedgerUser implements IUIDable {
 
     @Type(() => LedgerPermissionGroup)
     permissions: Array<LedgerPermissionGroup>;
+
+    // --------------------------------------------------------------------------
+    //
+    //  Pubic Methods
+    //
+    // --------------------------------------------------------------------------
+
+    public getPermissions(): Array<LedgerPermissionKey> {
+        if (_.isNil(this.permissions)) {
+            throw new LedgerError(LedgerErrorCode.BAD_REQUEST, `Unable to find permissions, probably must load it them first`);
+        }
+        return _.uniq(_.compact(_.flatten(this.permissions.map(item => item.permissions))));
+    }
 }
