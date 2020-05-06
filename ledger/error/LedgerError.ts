@@ -1,5 +1,4 @@
 import { ExtendedError } from '@ts-core/common/error';
-import { HttpCode, HttpStatus } from '@nestjs/common';
 
 export class LedgerError<T = any> extends ExtendedError<T> {
     // --------------------------------------------------------------------------
@@ -14,8 +13,8 @@ export class LedgerError<T = any> extends ExtendedError<T> {
 }
 
 export enum LedgerErrorCode {
-    BAD_REQUEST = HttpStatus.BAD_REQUEST,
-    UNAUTHORIZED = HttpStatus.UNAUTHORIZED,
-    FORBIDDEN = HttpStatus.FORBIDDEN,
-    NOT_FOUND = HttpStatus.NOT_FOUND
+    BAD_REQUEST = 400,
+    UNAUTHORIZED = 401,
+    FORBIDDEN = 403,
+    NOT_FOUND = 404
 }
