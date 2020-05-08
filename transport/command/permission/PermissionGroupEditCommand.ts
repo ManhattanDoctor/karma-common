@@ -9,7 +9,7 @@ export class PermissionGroupEditCommand extends TransportCommandFabricAsync<Ledg
     //
     // --------------------------------------------------------------------------
 
-    public static readonly NAME = KarmaLedgerCommand.PERMISSION_GROUP_REMOVE;
+    public static readonly NAME = KarmaLedgerCommand.PERMISSION_GROUP_EDIT;
 
     // --------------------------------------------------------------------------
     //
