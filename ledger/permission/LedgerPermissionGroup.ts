@@ -33,7 +33,6 @@ export class LedgerPermissionGroup implements IUIDable {
     @Matches(LedgerPermissionGroup.UID_REGXP)
     uid: string;
 
-    @IsOptional()
     @Length(5, 250)
     @IsString()
     @Matches(RegExpUtil.DESCRIPTION)
