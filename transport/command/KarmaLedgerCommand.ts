@@ -4,6 +4,8 @@ export enum KarmaLedgerCommand {
     USER_LIST = 'KARMA:UserList',
     USER_EDIT = 'KARMA:UserEdit',
 
+    COIN_EMIT = 'KARMA:CoinEmit',
+
     PERMISSION_GROUP_ADD = 'KARMA:PermissionGroupAdd',
     PERMISSION_GROUP_LIST = 'KARMA:PermissionGroupList',
     PERMISSION_GROUP_EDIT = 'KARMA:PermissionGroupEdit',

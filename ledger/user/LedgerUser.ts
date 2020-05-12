@@ -1,12 +1,13 @@
-import { IsEnum, IsDate, Length, Matches, IsOptional, IsString } from 'class-validator';
-import { Exclude, Type } from 'class-transformer';
+import { IsEnum, IsDate, Matches } from 'class-validator';
+import { Type } from 'class-transformer';
 import { LedgerPermissionGroup, LedgerPermissionKey } from '../permission';
-import { LedgerCryptoKey } from '../key/LedgerCryptoKey';
+import { LedgerCryptoKey } from '../cryptoKey/LedgerCryptoKey';
 import { RegExpUtil } from '../../util';
 import { IUIDable } from '../../IUIDable';
 import * as uuid from 'uuid';
 import * as _ from 'lodash';
 import { LedgerError, LedgerErrorCode } from '../error';
+import { LedgerWallet } from '../wallet/LedgerWallet';
 
 export enum LedgerUserStatus {
     ACTIVE = 'ACTIVE',
@@ -40,7 +41,7 @@ export class LedgerUser implements IUIDable {
 
     public static createUid(createdDate: Date): string {
         let time = LedgerUser.MAX_CREATED_DATE.getTime() - createdDate.getTime();
-        return `${LedgerUser.PREFIX}:${_.padStart(time.toString(), 14, '0')}:${uuid()}`;
+        return `${LedgerUser.PREFIX}/${_.padStart(time.toString(), 14, '0')}/${uuid()}`;
     }
 
     // --------------------------------------------------------------------------
@@ -61,6 +62,9 @@ export class LedgerUser implements IUIDable {
 
     @Type(() => LedgerCryptoKey)
     cryptoKey: LedgerCryptoKey;
+
+    @Type(() => LedgerWallet)
+    wallet: LedgerWallet;
 
     @Type(() => LedgerPermissionGroup)
     permissions: Array<LedgerPermissionGroup>;
