@@ -5,6 +5,7 @@ export enum LedgerPermissionKey {
 
     сanUserAdd = 'сanUserAdd',
     сanUserEdit = 'сanUserEdit',
+    сanUserRemove = 'сanUserRemove',
 
     сanCoinEmit = 'сanCoinEmit',
 
