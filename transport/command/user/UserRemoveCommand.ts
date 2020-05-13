@@ -2,20 +2,17 @@ import { TransportCommandFabricAsync } from '@ts-core/blockchain-fabric/transpor
 import { ITraceable } from '@ts-core/common/trace';
 import { TransformUtil } from '@ts-core/common/util';
 import { LedgerUser } from '../../../ledger/user';
-import { IsDefined, IsString, IsEnum, ValidateNested, IsArray } from 'class-validator';
+import { Matches } from 'class-validator';
 import { KarmaLedgerCommand } from '../KarmaLedgerCommand';
-import { LedgerCryptoKey } from '../../../ledger/cryptoKey';
-import { LedgerPermissionGroup } from '../../../ledger/permission';
-import { LedgerCoinId } from '../../../ledger/coin';
 
-export class UserAddCommand extends TransportCommandFabricAsync<IUserAddDto, LedgerUser> {
+export class UserRemoveCommand extends TransportCommandFabricAsync<IUserRemoveDto, LedgerUser> {
     // --------------------------------------------------------------------------
     //
     //  Public Static Properties
     //
     // --------------------------------------------------------------------------
 
-    public static readonly NAME = KarmaLedgerCommand.USER_ADD;
+    public static readonly NAME = KarmaLedgerCommand.USER_REMOVE;
 
     // --------------------------------------------------------------------------
     //
@@ -23,8 +20,8 @@ export class UserAddCommand extends TransportCommandFabricAsync<IUserAddDto, Led
     //
     // --------------------------------------------------------------------------
 
-    constructor(request: IUserAddDto) {
-        super(UserAddCommand.NAME, TransformUtil.toClass(UserAddDto, request));
+    constructor(request: IUserRemoveDto) {
+        super(UserRemoveCommand.NAME, TransformUtil.toClass(UserRemoveDto, request));
     }
 
     // --------------------------------------------------------------------------
@@ -38,16 +35,11 @@ export class UserAddCommand extends TransportCommandFabricAsync<IUserAddDto, Led
     }
 }
 
-export interface IUserAddDto extends ITraceable {
-    cryptoKey: Partial<LedgerCryptoKey>;
-    permissions: Array<LedgerPermissionGroup>;
+export interface IUserRemoveDto extends ITraceable {
+    uid: string;
 }
 
-export class UserAddDto implements IUserAddDto {
-    @IsDefined()
-    cryptoKey: Partial<LedgerCryptoKey>;
-
-    @IsArray()
-    @ValidateNested()
-    permissions: Array<LedgerPermissionGroup>;
+export class UserRemoveDto implements IUserRemoveDto {
+    @Matches(LedgerUser.UID_REGXP)
+    uid: string;
 }

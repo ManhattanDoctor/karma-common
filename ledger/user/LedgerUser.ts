@@ -22,7 +22,7 @@ export class LedgerUser implements IUIDable {
     // --------------------------------------------------------------------------
 
     public static PREFIX = 'user';
-    public static UID_REGXP = new RegExp(`${LedgerUser.PREFIX}:${RegExpUtil.DATE_TIME}:${RegExpUtil.UUID}$`, 'i');
+    public static UID_REGXP = new RegExp(`${LedgerUser.PREFIX}/${RegExpUtil.DATE_TIME}/${RegExpUtil.UUID}$`, 'i');
 
     private static MAX_CREATED_DATE = new Date(2500, 0);
 

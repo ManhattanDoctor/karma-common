@@ -1,4 +1,5 @@
 export enum LedgerCoinId {
     USD = 'USD',
-    RUR = 'RUR'
+    RUR = 'RUR',
+    EUR = 'EUR',
 }

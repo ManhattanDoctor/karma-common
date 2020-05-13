@@ -1,4 +1,4 @@
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsNumberString, IsString } from 'class-validator';
 import { IUIDable } from '@karma/common';
 import { LedgerCoinId } from '../coin';
 import * as uuid from 'uuid';
@@ -18,17 +18,11 @@ export class LedgerWalletAccount implements IUIDable {
     //
     // --------------------------------------------------------------------------
 
-    public static create(coinId: LedgerCoinId): LedgerWalletAccount {
-        let item = new LedgerWalletAccount();
-        item.uid = LedgerWalletAccount.createUid(coinId);
-        item.coinId = coinId;
-        item.value = '0';
-        return item;
+    /*
+    public static createUid(): string {
+        return `${LedgerWalletAccount.PREFIX}:${uuid()}`;
     }
-
-    public static createUid(coinId: LedgerCoinId): string {
-        return `${LedgerWalletAccount.PREFIX}/${coinId}/${uuid()}`;
-    }
+    */
 
     // --------------------------------------------------------------------------
     //
@@ -42,6 +36,6 @@ export class LedgerWalletAccount implements IUIDable {
     @IsEnum(LedgerCoinId)
     coinId: LedgerCoinId;
 
-    @IsString()
+    @IsNumberString()
     value: string;
 }
