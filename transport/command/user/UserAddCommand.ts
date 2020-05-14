@@ -2,11 +2,10 @@ import { TransportCommandFabricAsync } from '@ts-core/blockchain-fabric/transpor
 import { ITraceable } from '@ts-core/common/trace';
 import { TransformUtil } from '@ts-core/common/util';
 import { LedgerUser } from '../../../ledger/user';
-import { IsDefined, IsString, IsEnum, ValidateNested, IsArray } from 'class-validator';
+import { IsDefined, ValidateNested, IsArray } from 'class-validator';
 import { KarmaLedgerCommand } from '../KarmaLedgerCommand';
 import { LedgerCryptoKey } from '../../../ledger/cryptoKey';
 import { LedgerPermissionGroup } from '../../../ledger/permission';
-import { LedgerCoinId } from '../../../ledger/coin';
 
 export class UserAddCommand extends TransportCommandFabricAsync<IUserAddDto, LedgerUser> {
     // --------------------------------------------------------------------------
