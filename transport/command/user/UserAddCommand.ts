@@ -2,7 +2,7 @@ import { TransportCommandFabricAsync } from '@ts-core/blockchain-fabric/transpor
 import { ITraceable } from '@ts-core/common/trace';
 import { TransformUtil } from '@ts-core/common/util';
 import { LedgerUser } from '../../../ledger/user';
-import { IsDefined, ValidateNested, IsArray } from 'class-validator';
+import { IsString, IsDefined, ValidateNested, IsArray } from 'class-validator';
 import { KarmaLedgerCommand } from '../KarmaLedgerCommand';
 import { LedgerCryptoKey } from '../../../ledger/cryptoKey';
 import { LedgerPermissionGroup } from '../../../ledger/permission';
@@ -39,12 +39,16 @@ export class UserAddCommand extends TransportCommandFabricAsync<IUserAddDto, Led
 
 export interface IUserAddDto extends ITraceable {
     cryptoKey: Partial<LedgerCryptoKey>;
+    description: string;
     permissions: Array<LedgerPermissionGroup>;
 }
 
 export class UserAddDto implements IUserAddDto {
     @IsDefined()
     cryptoKey: Partial<LedgerCryptoKey>;
+
+    @IsString()
+    description: string;
 
     @IsArray()
     @ValidateNested()

@@ -2,10 +2,11 @@ import { TransportCommandFabricAsync } from '@ts-core/blockchain-fabric/transpor
 import { ITraceable } from '@ts-core/common/trace';
 import { TransformUtil } from '@ts-core/common/util';
 import { LedgerUser } from '../../../ledger/user';
-import { Matches, IsString, IsEnum } from 'class-validator';
+import { Matches, IsDefined, ValidateNested, IsString, IsEnum } from 'class-validator';
 import { KarmaLedgerCommand } from '../KarmaLedgerCommand';
 import { LedgerCoinId } from '../../../ledger/coin';
 import { LedgerWalletAccount } from '../../../ledger/wallet';
+import { ILedgerPaymentDetails, LedgerPaymentDetails } from '../../../ledger/payment';
 
 export class CoinEmitCommand extends TransportCommandFabricAsync<ICoinEmitDto, LedgerWalletAccount> {
     // --------------------------------------------------------------------------
@@ -41,6 +42,7 @@ export interface ICoinEmitDto extends ITraceable {
     to: string;
     amount: string;
     coinId: LedgerCoinId;
+    details: ILedgerPaymentDetails;
 }
 
 export class CoinEmitDto implements ICoinEmitDto {
@@ -52,4 +54,8 @@ export class CoinEmitDto implements ICoinEmitDto {
 
     @IsEnum(LedgerCoinId)
     coinId: LedgerCoinId;
+
+    @IsDefined()
+    @ValidateNested()
+    details: LedgerPaymentDetails;
 }

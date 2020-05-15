@@ -1,7 +1,7 @@
-import { IsEnum, IsDate, Matches } from 'class-validator';
+import { IsEnum, IsDate, IsString, Length, Matches } from 'class-validator';
 import { Type } from 'class-transformer';
 import { LedgerPermissionGroup, LedgerPermissionKey } from '../permission';
-import { LedgerCryptoKey } from '../cryptoKey/LedgerCryptoKey';
+import { LedgerCryptoKey } from '../cryptoKey';
 import { RegExpUtil } from '../../util';
 import { IUIDable } from '../../IUIDable';
 import * as uuid from 'uuid';
@@ -59,6 +59,11 @@ export class LedgerUser implements IUIDable {
     @Type(() => Date)
     @IsDate()
     createdDate: Date;
+
+    @Length(5, 50)
+    @IsString()
+    @Matches(RegExpUtil.DESCRIPTION)
+    description: string;
 
     @Type(() => LedgerCryptoKey)
     cryptoKey: LedgerCryptoKey;
