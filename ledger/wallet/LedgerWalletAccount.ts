@@ -1,7 +1,6 @@
 import { IsEnum, IsNumberString, IsString } from 'class-validator';
 import { IUIDable } from '@karma/common';
 import { LedgerCoinId } from '../coin';
-import * as uuid from 'uuid';
 
 export class LedgerWalletAccount implements IUIDable {
     // --------------------------------------------------------------------------

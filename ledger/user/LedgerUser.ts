@@ -35,6 +35,8 @@ export class LedgerUser implements IUIDable {
     public static create(createdDate: Date): LedgerUser {
         let item = new LedgerUser();
         item.uid = LedgerUser.createUid(createdDate);
+        item.wallet = new LedgerWallet();
+        item.cryptoKey = new LedgerCryptoKey();
         item.createdDate = createdDate;
         return item;
     }

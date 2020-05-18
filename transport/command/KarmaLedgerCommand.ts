@@ -6,6 +6,7 @@ export enum KarmaLedgerCommand {
     USER_REMOVE = 'KARMA:UserRemove',
     USER_CRYPTO_KEY_EDIT= 'KARMA:UserCryptoKeyEdit',
     USER_PERMISSION_EDIT = 'KARMA:UserPermissionEdit',
+    USER_DESCRIPTION_EDIT= 'KARMA:UserDescriptionEdit',
 
     COIN_EMIT = 'KARMA:CoinEmit',
 
