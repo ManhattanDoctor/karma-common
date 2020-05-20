@@ -1,4 +1,4 @@
-import { IsEnum, IsDate, IsString, Length, Matches } from 'class-validator';
+import { IsEnum, IsDate, IsOptional, IsString, Length, IsArray, ValidateNested, Matches } from 'class-validator';
 import { Type } from 'class-transformer';
 import { LedgerPermissionGroup, LedgerPermissionKey } from '../permission';
 import { LedgerCryptoKey } from '../cryptoKey';
@@ -8,6 +8,7 @@ import * as uuid from 'uuid';
 import * as _ from 'lodash';
 import { LedgerError, LedgerErrorCode } from '../error';
 import { LedgerWallet } from '../wallet/LedgerWallet';
+import { LedgerCompany } from '../company/LedgerCompany';
 
 export enum LedgerUserStatus {
     ACTIVE = 'ACTIVE',
@@ -55,6 +56,10 @@ export class LedgerUser implements IUIDable {
     @Matches(LedgerUser.UID_REGXP)
     uid: string;
 
+    @IsOptional()
+    @Matches(LedgerCompany.UID_REGXP)
+    companyUid: string;
+
     @IsEnum(LedgerUserStatus)
     status: LedgerUserStatus;
 
@@ -73,7 +78,13 @@ export class LedgerUser implements IUIDable {
     @Type(() => LedgerWallet)
     wallet: LedgerWallet;
 
+    @Matches(LedgerPermissionGroup.UID_REGXP, { each: true })
+    permissionIds: Array<string>;
+
     @Type(() => LedgerPermissionGroup)
+    @IsOptional()
+    @IsArray()
+    @ValidateNested()
     permissions: Array<LedgerPermissionGroup>;
 
     // --------------------------------------------------------------------------

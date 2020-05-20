@@ -38,14 +38,13 @@ export class UserPermissionEditCommand extends TransportCommandFabricAsync<IUser
 
 export interface IUserPermissionEditDto extends ITraceable {
     uid: string;
-    permissions: Array<LedgerPermissionGroup>;
+    permissionIds: Array<string>;
 }
 
 export class UserPermissionEditDto implements IUserPermissionEditDto {
     @Matches(LedgerUser.UID_REGXP)
     uid: string;
   
-    @IsArray()
-    @ValidateNested()
-    permissions: Array<LedgerPermissionGroup>;
+    @Matches(LedgerPermissionGroup.UID_REGXP, { each: true })
+    permissionIds: Array<string>;
 }
